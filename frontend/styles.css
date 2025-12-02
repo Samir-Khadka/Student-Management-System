@@ -445,7 +445,7 @@ a:hover {
 /* ============================================
    AUTHENTICATION SCREEN STYLES
    ============================================ */
-#auth-screen {
+#auth-screen.active {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -876,7 +876,7 @@ a:hover {
 }
 
 .content-section.active {
-    display: block;
+    display: block !important;
 }
 
 .section-header {
