@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <!-- Landing Page -->
+    <div id="landing-screen" class="screen active">
+        <nav class="landing-nav">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>Student Management System</span>
+            </div>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#about">About</a>
+                <button class="btn-primary" onclick="showAuthScreen()">Get Started</button>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Manage Your Students <span class="gradient-text">Effortlessly</span></h1>
+                <p class="hero-subtitle">A modern, intuitive platform for tracking student performance, analytics, and
+                    insights.</p>
+                <div class="hero-actions">
+                    <button class="btn-primary btn-lg" onclick="showAuthScreen()">
+                        <span>Get Started</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button class="btn-secondary btn-lg" onclick="scrollToFeatures()">
+                        <span>Learn More</span>
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Analytics</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-users"></i>
+                    <span>Students</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-trophy"></i>
+                    <span>Performance</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2 class="section-title">Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <h3>Student Management</h3>
+                    <p>Complete student profile management with grades, attendance, and performance tracking.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3>Advanced Analytics</h3>
+                    <p>Powerful insights and visualizations to understand student performance trends.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>AI Predictions</h3>
+                    <p>Intelligent predictions to identify at-risk students and intervention opportunities.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Role-Based Access</h3>
+                    <p>Secure access control for admins, teachers, and students with customized views.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Auth Screen -->
+    <div id="auth-screen" class="screen">
+        <div class="auth-container">
+            <div class="auth-card glass-card">
+                <div class="auth-header">
+                    <div class="auth-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Student Management System</span>
+                    </div>
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Login</button>
+                        <button class="auth-tab" data-tab="register">Register</button>
+                    </div>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form active">
+                    <h2>Welcome Back</h2>
+                    <p class="auth-subtitle">Sign in to your account</p>
+
+                    <div class="form-group">
+                        <label for="login-username">Username</label>
+                        <input type="text" id="login-username" placeholder="Enter your username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-block">
+                        <span>Sign In</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="auth-footer">
+                        <a href="#" class="text-link">Forgot password?</a>
+                        <p style="margin-top: 1rem; color: var(--text-secondary);">
+                            Don't have an account? <a href="#" class="text-link"
+                                onclick="switchAuthTab('register')">Sign up</a>
+                        </p>
+                    </div>
+                </form>
+
+                <!-- Register Form -->
+                <form id="register-form" class="auth-form">
+                    <h2>Create Account</h2>
+                    <p class="auth-subtitle">Join us today</p>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="register-username">Username</label>
+                            <input type="text" id="register-username" placeholder="Choose username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <input type="email" id="register-email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="register-password">Password</label>
+                            <input type="password" id="register-password" placeholder="Min 6 characters" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-full-name">Full Name</label>
+                            <input type="text" id="register-full-name" placeholder="John Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="register-role">Role</label>
+                            <select id="register-role" required>
+                                <option value="">Select role</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="student-id-group" style="display: none;">
+                            <label for="register-student-id">Student ID</label>
+                            <input type="text" id="register-student-id" placeholder="e.g., S001">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary btn-block">
+                        <span>Create Account</span>
+                        <i class="fas fa-user-plus"></i>
+                    </button>
+
+                    <div class="auth-footer">
+                        <p style="color: var(--text-secondary);">
+                            Already have an account? <a href="#" class="text-link" onclick="switchAuthTab('login')">Sign
+                                in</a>
+                        </p>
+                    </div>
+                </form>
+
+                <button class="back-btn" onclick="showLandingScreen()">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Home</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboard-screen" class="screen">
+        <!-- Top Navigation -->
+        <nav class="dashboard-nav">
+            <div class="nav-left">
+                <button class="menu-toggle" onclick="toggleSidebar()">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="nav-brand">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Student Management System</span>
+                </div>
+            </div>
+            <div class="nav-right">
+                <div class="user-info">
+                    <div class="user-avatar" id="user-avatar">
+                        <span id="user-initials">U</span>
+                    </div>
+                    <div class="user-details">
+                        <span class="user-name" id="user-name">User</span>
+                        <span class="user-role" id="user-role">Role</span>
+                    </div>
+                </div>
+                <button class="btn-icon" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-content">
+                <ul class="sidebar-menu" id="sidebar-menu">
+                    <!-- Menu items will be populated by JavaScript based on role -->
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Admin Dashboard -->
+            <div id="admin-dashboard" class="content-section">
+                <div class="section-header">
+                    <h1>Dashboard Overview</h1>
+                    <p>Monitor and manage your institution</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-students">0</h3>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-teachers">0</h3>
+                            <p>Total Teachers</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon red">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="at-risk-students">0</h3>
+                            <p>At-Risk Students</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="average-grade">0</h3>
+                            <p>Average Grade</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3>Recent Students</h3>
+                            <button class="btn-text" onclick="showSection('students-section')">View All</button>
+                        </div>
+                        <div id="recent-students-list"></div>
+                    </div>
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3>Performance Distribution</h3>
+                        </div>
+                        <canvas id="performance-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Students Management Section -->
+            <div id="students-section" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <div>
+                        <h1>Students Management</h1>
+                        <p>Manage all student records</p>
+                    </div>
+                    <button class="btn-primary" onclick="openAddStudentModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Student</span>
+                    </button>
+                </div>
+
+                <div class="glass-card">
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="student-search" placeholder="Search students...">
+                        </div>
+                        <div class="filter-group">
+                            <select id="gender-filter">
+                                <option value="">All Genders</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <select id="support-filter">
+                                <option value="">All Support Levels</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Student ID</th>
+                                    <th>Name</th>
+                                    <th>Age</th>
+                                    <th>Gender</th>
+                                    <th>Final Grade</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="students-table-body">
+                                <!-- Students will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics-section" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h1>Analytics & Insights</h1>
+                    <p>Detailed performance analysis</p>
+                </div>
+
+                <div class="analytics-grid">
+                    <div class="glass-card">
+                        <h3>Gender Distribution</h3>
+                        <canvas id="gender-chart"></canvas>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Performance by Parental Support</h3>
+                        <canvas id="support-chart"></canvas>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Internet Access Impact</h3>
+                        <canvas id="internet-chart"></canvas>
+                    </div>
+                    <div class="glass-card">
+                        <h3>At-Risk Students</h3>
+                        <div id="at-risk-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Dashboard -->
+            <div id="teacher-dashboard" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h1>Class Overview</h1>
+                    <p>Monitor student performance</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon purple">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="teacher-total-students">0</h3>
+                            <p>Total Students</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon green">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="teacher-average-grade">0</h3>
+                            <p>Class Average</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon red">
+                            <i class="fas fa-exclamation-circle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="teacher-at-risk">0</h3>
+                            <p>Need Attention</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon blue">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="teacher-top-performers">0</h3>
+                            <p>Top Performers</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid">
+                    <div class="glass-card">
+                        <h3>Class Performance Trends</h3>
+                        <canvas id="teacher-performance-chart"></canvas>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Students Needing Attention</h3>
+                        <div id="teacher-at-risk-list"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Dashboard -->
+            <div id="student-dashboard" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h1>My Profile</h1>
+                    <p>View your academic progress</p>
+                </div>
+
+                <div class="student-profile-grid">
+                    <div class="glass-card profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar large">
+                                <span id="student-avatar-initials">S</span>
+                            </div>
+                            <div class="profile-info">
+                                <h2 id="student-name">Student Name</h2>
+                                <p id="student-id-display">ID: S001</p>
+                            </div>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <span class="stat-label">Final Grade</span>
+                                <span class="stat-value large" id="student-grade">--</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-label">Study Time (hrs/week)</span>
+                                <span class="stat-value" id="student-study-time">--</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-label">Absences</span>
+                                <span class="stat-value" id="student-absences">--</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h3>Performance Prediction</h3>
+                        <div id="student-prediction">
+                            <div class="prediction-result">
+                                <div class="prediction-icon" id="prediction-icon">
+                                    <i class="fas fa-question"></i>
+                                </div>
+                                <div class="prediction-info">
+                                    <h4 id="prediction-status">Loading...</h4>
+                                    <p id="prediction-details">Analyzing your performance</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h3>Academic Details</h3>
+                        <div class="details-list" id="student-details">
+                            <!-- Details will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add/Edit Student Modal -->
+    <div id="student-modal" class="modal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h2 id="modal-title">Add Student</h2>
+                <button class="modal-close" onclick="closeStudentModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="student-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="student-id-input">Student ID</label>
+                        <input type="text" id="student-id-input" placeholder="e.g., S001" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-name-input">Name</label>
+                        <input type="text" id="student-name-input" placeholder="Full name" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="student-age-input">Age</label>
+                        <input type="number" id="student-age-input" min="5" max="100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-gender-input">Gender</label>
+                        <select id="student-gender-input" required>
+                            <option value="">Select gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="student-study-time-input">Study Time (hrs/week)</label>
+                        <input type="number" id="student-study-time-input" min="0" max="168" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-absences-input">Absences</label>
+                        <input type="number" id="student-absences-input" min="0" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="student-support-input">Parental Support</label>
+                        <select id="student-support-input" required>
+                            <option value="">Select level</option>
+                            <option value="low">Low</option>
+                            <option value="medium">Medium</option>
+                            <option value="high">High</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="student-internet-input">Internet Access</label>
+                        <select id="student-internet-input" required>
+                            <option value="">Select</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="student-grade-input">Final Grade</label>
+                    <input type="number" id="student-grade-input" min="0" max="100" required>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeStudentModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i>
+                        <span>Save Student</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Action completed</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/teacher.js"></script>
+    <script src="js/student.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
+</body>
+
+</html>

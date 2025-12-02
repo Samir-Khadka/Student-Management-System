@@ -1,0 +1,544 @@
+{
+  "info": {
+    "name": "Student Academic Performance Management System",
+    "description": "Complete API collection for COM661 CW1 - Student Management Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{access_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5001/api",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register Admin",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response has user_id\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property('user_id');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin1\",\n  \"password\": \"password123\",\n  \"email\": \"admin@test.com\",\n  \"role\": \"admin\",\n  \"full_name\": \"Admin User\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new admin user"
+          },
+          "response": []
+        },
+        {
+          "name": "Register Teacher",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"teacher1\",\n  \"password\": \"password123\",\n  \"email\": \"teacher@test.com\",\n  \"role\": \"teacher\",\n  \"full_name\": \"Teacher One\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new teacher user"
+          },
+          "response": []
+        },
+        {
+          "name": "Register Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"student1\",\n  \"password\": \"password123\",\n  \"email\": \"student@test.com\",\n  \"role\": \"student\",\n  \"full_name\": \"Student One\",\n  \"student_id\": \"STU001\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new student user (requires student_id)"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "var jsonData = pm.response.json();",
+                  "",
+                  "pm.test(\"Response has access_token\", function () {",
+                  "    pm.expect(jsonData).to.have.property('access_token');",
+                  "});",
+                  "",
+                  "// Save tokens to collection variables",
+                  "if (jsonData.access_token) {",
+                  "    pm.collectionVariables.set('access_token', jsonData.access_token);",
+                  "}",
+                  "if (jsonData.refresh_token) {",
+                  "    pm.collectionVariables.set('refresh_token', jsonData.refresh_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin1\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login and receive JWT tokens"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "me"]
+            },
+            "description": "Get current authenticated user's profile"
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.access_token) {",
+                  "    pm.collectionVariables.set('access_token', jsonData.access_token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{refresh_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/auth/refresh",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "refresh"]
+            },
+            "description": "Get new access token using refresh token"
+          },
+          "response": []
+        }
+      ],
+      "description": "Authentication endpoints for user registration and login"
+    },
+    {
+      "name": "Students CRUD",
+      "item": [
+        {
+          "name": "Create Student",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"student_id\": \"STU001\",\n  \"name\": \"John Doe\",\n  \"age\": 18,\n  \"gender\": \"male\",\n  \"study_time\": 10,\n  \"absences\": 3,\n  \"parental_support\": \"high\",\n  \"internet_access\": true,\n  \"final_grade\": 75\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/students/",
+              "host": ["{{base_url}}"],
+              "path": ["students", ""]
+            },
+            "description": "Create a new student record"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/",
+              "host": ["{{base_url}}"],
+              "path": ["students", ""]
+            },
+            "description": "Get all students"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Student by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/STU001",
+              "host": ["{{base_url}}"],
+              "path": ["students", "STU001"]
+            },
+            "description": "Get a specific student by student_id"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Student",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"final_grade\": 85,\n  \"study_time\": 15\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/students/STU001",
+              "host": ["{{base_url}}"],
+              "path": ["students", "STU001"]
+            },
+            "description": "Update student information"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Student",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/STU001",
+              "host": ["{{base_url}}"],
+              "path": ["students", "STU001"]
+            },
+            "description": "Delete a student record"
+          },
+          "response": []
+        },
+        {
+          "name": "Predict Performance",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/predict/STU001",
+              "host": ["{{base_url}}"],
+              "path": ["students", "predict", "STU001"]
+            },
+            "description": "Get pass/fail prediction for a student"
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Gender",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/?gender=male",
+              "host": ["{{base_url}}"],
+              "path": ["students", ""],
+              "query": [
+                {
+                  "key": "gender",
+                  "value": "male"
+                }
+              ]
+            },
+            "description": "Filter students by gender"
+          },
+          "response": []
+        },
+        {
+          "name": "Filter by Grade Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/students/?min_grade=60&max_grade=80",
+              "host": ["{{base_url}}"],
+              "path": ["students", ""],
+              "query": [
+                {
+                  "key": "min_grade",
+                  "value": "60"
+                },
+                {
+                  "key": "max_grade",
+                  "value": "80"
+                }
+              ]
+            },
+            "description": "Filter students by grade range"
+          },
+          "response": []
+        }
+      ],
+      "description": "CRUD operations for student management"
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Average Grade",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/analytics/average_grade",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "average_grade"]
+            },
+            "description": "Calculate average grade"
+          },
+          "response": []
+        },
+        {
+          "name": "At-Risk Students",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/analytics/at_risk_students",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "at_risk_students"]
+            },
+            "description": "Get list of students at risk of failing"
+          },
+          "response": []
+        },
+        {
+          "name": "Gender Distribution",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/analytics/gender_distribution",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "gender_distribution"]
+            },
+            "description": "Get gender distribution statistics"
+          },
+          "response": []
+        },
+        {
+          "name": "Performance by Support",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/analytics/performance_by_support",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "performance_by_support"]
+            },
+            "description": "Analyze performance by parental support"
+          },
+          "response": []
+        },
+        {
+          "name": "Internet Access Impact",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/analytics/internet_access_impact",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "internet_access_impact"]
+            },
+            "description": "Analyze impact of internet access"
+          },
+          "response": []
+        },
+        {
+          "name": "Class Summary (Teacher)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/analytics/class_summary",
+              "host": ["{{base_url}}"],
+              "path": ["analytics", "class_summary"]
+            },
+            "description": "Comprehensive class overview (teacher only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Analytics endpoints for performance insights"
+    },
+    {
+      "name": "Student Profile",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/student/profile",
+              "host": ["{{base_url}}"],
+              "path": ["student", "profile"]
+            },
+            "description": "Get own profile (student only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update My Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"study_time\": 12,\n  \"internet_access\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/student/profile",
+              "host": ["{{base_url}}"],
+              "path": ["student", "profile"]
+            },
+            "description": "Update own profile (limited fields, student only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Prediction",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/student/profile/prediction",
+              "host": ["{{base_url}}"],
+              "path": ["student", "profile", "prediction"]
+            },
+            "description": "Get own performance prediction (student only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Student-specific profile endpoints"
+    }
+  ]
+}

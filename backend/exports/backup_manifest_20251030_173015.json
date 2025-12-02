@@ -1,0 +1,27 @@
+{
+  "backup_info": {
+    "timestamp": "2025-10-30T17:30:15.711510",
+    "database": "student_management",
+    "mongo_uri": "***//localhost:27017/student_management",
+    "total_files": 2,
+    "exported_by": "export_database.py"
+  },
+  "collection_stats": {
+    "students": 51,
+    "users": 58
+  },
+  "exported_files": [
+    {
+      "filename": "students_20251030_173015.json",
+      "size_bytes": 477981,
+      "format": "json",
+      "exported_at": "2025-10-30T17:30:15.761579"
+    },
+    {
+      "filename": "users_20251030_173015.json",
+      "size_bytes": 23402,
+      "format": "json",
+      "exported_at": "2025-10-30T17:30:15.761579"
+    }
+  ]
+}

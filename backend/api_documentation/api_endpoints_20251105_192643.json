@@ -1,0 +1,929 @@
+{
+  "generated_at": "2025-11-05T19:26:43.554661",
+  "base_url": "http://localhost:5001",
+  "total_endpoints": 21,
+  "api_info": {
+    "title": "Student Academic Performance Management System API",
+    "version": "1.0.0",
+    "description": "REST API for managing student academic performance data with analytics and predictions. Built for COM661 CW1 assignment."
+  },
+  "endpoints": [
+    {
+      "path": "/api/analytics/at_risk_students",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Get list of students at risk of failing (grade < 40).",
+      "description": "",
+      "tags": [
+        "Analytics"
+      ],
+      "parameters": [
+        {
+          "name": "threshold",
+          "in": "query",
+          "description": "Grade threshold for at-risk classification",
+          "required": false,
+          "type": "integer",
+          "schema": {}
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "List of at-risk students",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/analytics/average_grade",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Calculate average final grade across all students.",
+      "description": "",
+      "tags": [
+        "Analytics"
+      ],
+      "parameters": [
+        {
+          "name": "gender",
+          "in": "query",
+          "description": "Filter by gender",
+          "required": false,
+          "type": "string",
+          "schema": {}
+        },
+        {
+          "name": "parental_support",
+          "in": "query",
+          "description": "Filter by parental support level",
+          "required": false,
+          "type": "string",
+          "schema": {}
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Average grade statistics",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/analytics/class_summary",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Comprehensive class performance overview (Teacher only).",
+      "description": "",
+      "tags": [
+        "Analytics",
+        "Teacher"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Comprehensive class statistics",
+          "schema": {}
+        },
+        "403": {
+          "description": "Forbidden - Teacher access required",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/analytics/gender_distribution",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Get gender distribution statistics.",
+      "description": "",
+      "tags": [
+        "Analytics"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Gender distribution",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/analytics/internet_access_impact",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Analyze impact of internet access on performance.",
+      "description": "",
+      "tags": [
+        "Analytics"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Performance statistics by internet access",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/analytics/performance_by_support",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Analyze performance based on parental support levels.",
+      "description": "",
+      "tags": [
+        "Analytics"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Performance statistics by parental support",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/auth/change-password",
+      "method": "POST",
+      "operation_id": "",
+      "summary": "Change user password.",
+      "description": "",
+      "tags": [
+        "Authentication"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "type": "",
+          "schema": {
+            "properties": {
+              "current_password": {
+                "example": "oldpassword123",
+                "type": "string"
+              },
+              "new_password": {
+                "example": "newpassword123",
+                "type": "string"
+              }
+            },
+            "required": [
+              "current_password",
+              "new_password"
+            ],
+            "type": "object"
+          }
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Password changed successfully",
+          "schema": {}
+        },
+        "400": {
+          "description": "Invalid current password",
+          "schema": {}
+        },
+        "401": {
+          "description": "Unauthorized",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/auth/login",
+      "method": "POST",
+      "operation_id": "",
+      "summary": "Login and get JWT tokens.",
+      "description": "",
+      "tags": [
+        "Authentication"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "type": "",
+          "schema": {
+            "properties": {
+              "password": {
+                "example": "password123",
+                "type": "string"
+              },
+              "username": {
+                "example": "john_doe",
+                "type": "string"
+              }
+            },
+            "required": [
+              "username",
+              "password"
+            ],
+            "type": "object"
+          }
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Login successful",
+          "schema": {}
+        },
+        "401": {
+          "description": "Invalid credentials",
+          "schema": {}
+        }
+      },
+      "security": [],
+      "deprecated": false
+    },
+    {
+      "path": "/api/auth/logout",
+      "method": "POST",
+      "operation_id": "",
+      "summary": "Logout user.",
+      "description": "In JWT stateless authentication, actual logout is handled by client.<br/>This endpoint logs the logout event and provides confirmation.<br/>",
+      "tags": [
+        "Authentication"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Logout successful",
+          "schema": {}
+        },
+        "401": {
+          "description": "Invalid token",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/auth/me",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Get current user information.",
+      "description": "",
+      "tags": [
+        "Authentication"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Current user information",
+          "schema": {}
+        },
+        "401": {
+          "description": "Unauthorized",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/auth/refresh",
+      "method": "POST",
+      "operation_id": "",
+      "summary": "Refresh access token using refresh token.",
+      "description": "",
+      "tags": [
+        "Authentication"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "New access token",
+          "schema": {}
+        },
+        "401": {
+          "description": "Invalid refresh token",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/auth/register",
+      "method": "POST",
+      "operation_id": "",
+      "summary": "Register a new user.",
+      "description": "",
+      "tags": [
+        "Authentication"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "type": "",
+          "schema": {
+            "properties": {
+              "email": {
+                "example": "john@example.com",
+                "type": "string"
+              },
+              "full_name": {
+                "example": "John Doe",
+                "type": "string"
+              },
+              "password": {
+                "example": "password123",
+                "type": "string"
+              },
+              "role": {
+                "enum": [
+                  "student",
+                  "teacher",
+                  "admin"
+                ],
+                "example": "student",
+                "type": "string"
+              },
+              "student_id": {
+                "description": "Required if role is student",
+                "example": "S001",
+                "type": "string"
+              },
+              "username": {
+                "example": "john_doe",
+                "type": "string"
+              }
+            },
+            "required": [
+              "username",
+              "password",
+              "email",
+              "role"
+            ],
+            "type": "object"
+          }
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "201": {
+          "description": "User registered successfully",
+          "schema": {}
+        },
+        "400": {
+          "description": "Validation error",
+          "schema": {}
+        },
+        "409": {
+          "description": "Username already exists",
+          "schema": {}
+        }
+      },
+      "security": [],
+      "deprecated": false
+    },
+    {
+      "path": "/api/student/profile",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Get current student's profile.",
+      "description": "",
+      "tags": [
+        "Student Profile"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Student profile",
+          "schema": {}
+        },
+        "403": {
+          "description": "Forbidden - Only students can access",
+          "schema": {}
+        },
+        "404": {
+          "description": "Student not found",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/student/profile",
+      "method": "PUT",
+      "operation_id": "",
+      "summary": "Update current student's profile.",
+      "description": "Students can only update limited fields.<br/>",
+      "tags": [
+        "Student Profile"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": false,
+          "type": "",
+          "schema": {
+            "properties": {
+              "attendance_log": {
+                "items": {
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "internet_access": {
+                "type": "boolean"
+              },
+              "study_time": {
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Profile updated",
+          "schema": {}
+        },
+        "403": {
+          "description": "Forbidden - Only students can access",
+          "schema": {}
+        },
+        "404": {
+          "description": "Student not found",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/student/profile/prediction",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Get prediction for current student.",
+      "description": "",
+      "tags": [
+        "Student Profile"
+      ],
+      "parameters": [],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Prediction result",
+          "schema": {}
+        },
+        "403": {
+          "description": "Forbidden - Only students can access",
+          "schema": {}
+        },
+        "404": {
+          "description": "Student not found",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/students/",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Retrieve all students with optional filtering.",
+      "description": "",
+      "tags": [
+        "Students"
+      ],
+      "parameters": [
+        {
+          "name": "gender",
+          "in": "query",
+          "description": "Filter by gender",
+          "required": false,
+          "type": "string",
+          "schema": {}
+        },
+        {
+          "name": "min_grade",
+          "in": "query",
+          "description": "Minimum final grade",
+          "required": false,
+          "type": "integer",
+          "schema": {}
+        },
+        {
+          "name": "max_grade",
+          "in": "query",
+          "description": "Maximum final grade",
+          "required": false,
+          "type": "integer",
+          "schema": {}
+        },
+        {
+          "name": "limit",
+          "in": "query",
+          "description": "Number of results to return",
+          "required": false,
+          "type": "integer",
+          "schema": {}
+        },
+        {
+          "name": "skip",
+          "in": "query",
+          "description": "Number of results to skip",
+          "required": false,
+          "type": "integer",
+          "schema": {}
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "List of students",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/students/",
+      "method": "POST",
+      "operation_id": "",
+      "summary": "Create a new student.",
+      "description": "",
+      "tags": [
+        "Students"
+      ],
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": true,
+          "type": "",
+          "schema": {
+            "properties": {
+              "absences": {
+                "example": 3,
+                "type": "integer"
+              },
+              "age": {
+                "example": 16,
+                "type": "integer"
+              },
+              "final_grade": {
+                "maximum": 100,
+                "minimum": 0,
+                "type": "integer"
+              },
+              "gender": {
+                "enum": [
+                  "Male",
+                  "Female",
+                  "Other"
+                ],
+                "type": "string"
+              },
+              "internet_access": {
+                "type": "boolean"
+              },
+              "name": {
+                "example": "John Doe",
+                "type": "string"
+              },
+              "parental_support": {
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "type": "string"
+              },
+              "student_id": {
+                "example": "S001",
+                "type": "string"
+              },
+              "study_time": {
+                "example": 10,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "student_id",
+              "name",
+              "age",
+              "gender",
+              "study_time",
+              "absences",
+              "parental_support",
+              "internet_access",
+              "final_grade"
+            ],
+            "type": "object"
+          }
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "201": {
+          "description": "Student created successfully",
+          "schema": {}
+        },
+        "400": {
+          "description": "Validation error",
+          "schema": {}
+        },
+        "409": {
+          "description": "Student ID already exists",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/students/predict/{student_id}",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Predict student pass/fail performance.",
+      "description": "",
+      "tags": [
+        "Students",
+        "Predictions"
+      ],
+      "parameters": [
+        {
+          "name": "student_id",
+          "in": "path",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "schema": {}
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Prediction result",
+          "schema": {}
+        },
+        "404": {
+          "description": "Student not found",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/students/{student_id}",
+      "method": "DELETE",
+      "operation_id": "",
+      "summary": "Delete a student.",
+      "description": "",
+      "tags": [
+        "Students"
+      ],
+      "parameters": [
+        {
+          "name": "student_id",
+          "in": "path",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "schema": {}
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Student deleted successfully",
+          "schema": {}
+        },
+        "404": {
+          "description": "Student not found",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/students/{student_id}",
+      "method": "GET",
+      "operation_id": "",
+      "summary": "Retrieve a single student by student_id.",
+      "description": "",
+      "tags": [
+        "Students"
+      ],
+      "parameters": [
+        {
+          "name": "student_id",
+          "in": "path",
+          "description": "Student ID (e.g., S001)",
+          "required": true,
+          "type": "string",
+          "schema": {}
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Student details",
+          "schema": {}
+        },
+        "404": {
+          "description": "Student not found",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    },
+    {
+      "path": "/api/students/{student_id}",
+      "method": "PUT",
+      "operation_id": "",
+      "summary": "Update a student's information.",
+      "description": "",
+      "tags": [
+        "Students"
+      ],
+      "parameters": [
+        {
+          "name": "student_id",
+          "in": "path",
+          "description": "",
+          "required": true,
+          "type": "string",
+          "schema": {}
+        },
+        {
+          "name": "body",
+          "in": "body",
+          "description": "",
+          "required": false,
+          "type": "",
+          "schema": {
+            "properties": {
+              "absences": {
+                "type": "integer"
+              },
+              "age": {
+                "type": "integer"
+              },
+              "final_grade": {
+                "type": "integer"
+              },
+              "gender": {
+                "type": "string"
+              },
+              "internet_access": {
+                "type": "boolean"
+              },
+              "name": {
+                "type": "string"
+              },
+              "parental_support": {
+                "type": "string"
+              },
+              "study_time": {
+                "type": "integer"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ],
+      "request_body": {},
+      "responses": {
+        "200": {
+          "description": "Student updated successfully",
+          "schema": {}
+        },
+        "400": {
+          "description": "Validation error",
+          "schema": {}
+        },
+        "404": {
+          "description": "Student not found",
+          "schema": {}
+        }
+      },
+      "security": [
+        {
+          "Bearer": []
+        }
+      ],
+      "deprecated": false
+    }
+  ]
+}

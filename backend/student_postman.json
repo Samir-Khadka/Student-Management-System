@@ -1,0 +1,709 @@
+{
+    "info": {
+        "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+        "name": "Student Management API - Ready to Use",
+        "description": "Complete working API collection for Student Management Backend - Ready to import and use immediately",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. Health Check",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "http://localhost:5001/api/health",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "health"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "2. Register Admin User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"admin_user\",\n    \"password\": \"admin123\",\n    \"email\": \"admin@studentmanagement.com\",\n    \"role\": \"admin\",\n    \"full_name\": \"System Administrator\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5001/api/auth/register",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "auth",
+                        "register"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "3. Register Teacher User",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"teacher_john\",\n    \"password\": \"teacher123\",\n    \"email\": \"john.teacher@studentmanagement.com\",\n    \"role\": \"teacher\",\n    \"full_name\": \"John Smith\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5001/api/auth/register",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "auth",
+                        "register"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "4. Login as Admin",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"admin_user\",\n    \"password\": \"admin123\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5001/api/auth/login",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "auth",
+                        "login"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "5. Login as Teacher",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"username\": \"teacher_john\",\n    \"password\": \"teacher123\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5001/api/auth/login",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "auth",
+                        "login"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "6. Get Current User (Admin)",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/auth/me",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "auth",
+                        "me"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "7. Create Student 1",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"student_id\": \"STU001\",\n    \"name\": \"John Doe\",\n    \"age\": 18,\n    \"gender\": \"Male\",\n    \"study_time\": 10,\n    \"absences\": 3,\n    \"parental_support\": \"high\",\n    \"internet_access\": true,\n    \"final_grade\": 75\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5001/api/students/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "students",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "8. Create Student 2",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"student_id\": \"STU002\",\n    \"name\": \"Jane Smith\",\n    \"age\": 17,\n    \"gender\": \"Female\",\n    \"study_time\": 12,\n    \"absences\": 1,\n    \"parental_support\": \"medium\",\n    \"internet_access\": true,\n    \"final_grade\": 85\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5001/api/students/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "students",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "9. Create Student 3 (Low Grade)",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"student_id\": \"STU003\",\n    \"name\": \"Bob Wilson\",\n    \"age\": 19,\n    \"gender\": \"Male\",\n    \"study_time\": 3,\n    \"absences\": 15,\n    \"parental_support\": \"low\",\n    \"internet_access\": false,\n    \"final_grade\": 35\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5001/api/students/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "students",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "10. Get All Students",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/students/",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "students",
+                        ""
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "11. Get Specific Student",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/students/STU001",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "students",
+                        "STU001"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "12. Update Student",
+            "request": {
+                "method": "PUT",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"final_grade\": 80,\n    \"study_time\": 15\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "http://localhost:5001/api/students/STU001",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "students",
+                        "STU001"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "13. Predict Student Performance",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/students/predict/STU001",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "students",
+                        "predict",
+                        "STU001"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "14. Delete Student",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/students/STU003",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "students",
+                        "STU003"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "15. Average Grade Analytics",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/analytics/average_grade",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "analytics",
+                        "average_grade"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "16. At Risk Students Analytics",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/analytics/at_risk_students",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "analytics",
+                        "at_risk_students"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "17. Gender Distribution Analytics",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/analytics/gender_distribution",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "analytics",
+                        "gender_distribution"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "18. Performance by Support Analytics",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/analytics/performance_by_support",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "analytics",
+                        "performance_by_support"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "19. Internet Access Impact Analytics",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/analytics/internet_access_impact",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "analytics",
+                        "internet_access_impact"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "20. Class Summary (Teacher Only)",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_TEACHER_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/analytics/class_summary",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "analytics",
+                        "class_summary"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "21. Refresh Token",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_REFRESH_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/auth/refresh",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "auth",
+                        "refresh"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "22. Logout",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer YOUR_ADMIN_TOKEN_HERE",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "http://localhost:5001/api/auth/logout",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "5001",
+                    "path": [
+                        "api",
+                        "auth",
+                        "logout"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:5001",
+            "type": "string"
+        }
+    ]
+}
