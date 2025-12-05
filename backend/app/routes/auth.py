@@ -115,8 +115,32 @@ def register():
     
     if 'student_id' in data:
         user_doc['student_id'] = data['student_id']
+        
+        # Check if student_id already exists in students collection
+        if mongo.db.students.find_one({'student_id': data['student_id']}):
+            return jsonify({
+                'error': 'Conflict',
+                'message': f"Student ID {data['student_id']} already exists"
+            }), 409
     
     result = mongo.db.users.insert_one(user_doc)
+    
+    # If role is student, create entry in students collection
+    if validated_data['role'] == 'student':
+        student_doc = {
+            'student_id': data['student_id'],
+            'name': data.get('full_name', validated_data['username']),
+            'age': 0,  # Default
+            'gender': 'Other',  # Default
+            'study_time': 0,
+            'absences': 0,
+            'parental_support': 'medium',
+            'internet_access': False,
+            'final_grade': 0,
+            'created_at': datetime.utcnow(),
+            'updated_at': datetime.utcnow()
+        }
+        mongo.db.students.insert_one(student_doc)
     
     return jsonify({
         'message': 'User registered successfully',

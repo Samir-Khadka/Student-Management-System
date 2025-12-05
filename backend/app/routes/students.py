@@ -290,6 +290,13 @@ def update_student(student_id):
             {'$set': validated_data}
         )
         
+        # Sync name change to users collection
+        if 'name' in validated_data:
+            mongo.db.users.update_one(
+                {'student_id': student_id},
+                {'$set': {'full_name': validated_data['name']}}
+            )
+        
         student = mongo.db.students.find_one({'student_id': student_id})
         
         return jsonify({
@@ -333,10 +340,14 @@ def delete_student(student_id):
             'message': f'Student with ID {student_id} not found'
         }), 404
     
+    # Delete from students collection
     mongo.db.students.delete_one({'student_id': student_id})
     
+    # Delete from users collection (associated account)
+    mongo.db.users.delete_one({'student_id': student_id})
+    
     return jsonify({
-        'message': f'Student {student_id} deleted successfully'
+        'message': f'Student {student_id} and associated account deleted successfully'
     }), 200
 
 

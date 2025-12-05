@@ -159,9 +159,12 @@ function loadSectionData(sectionId) {
             loadAdminDashboard();
             break;
         case 'students-section':
-            if (user.role === 'admin') {
+            console.log('Loading students section. User role:', user.role);
+            if (user.role && user.role.toLowerCase() === 'admin') {
+                console.log('Loading Admin Students view');
                 loadAdminStudents();
             } else {
+                console.log('Loading Teacher Students view');
                 loadTeacherStudents();
             }
             break;
