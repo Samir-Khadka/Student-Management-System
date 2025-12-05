@@ -225,7 +225,7 @@
                         <span class="user-role" id="user-role">Role</span>
                     </div>
                     <i class="fas fa-chevron-down" style="font-size: 0.8rem; color: var(--text-secondary);"></i>
-                    
+
                     <!-- Dropdown Menu -->
                     <div class="dropdown-menu" id="user-dropdown">
                         <div class="dropdown-header">
@@ -382,6 +382,47 @@
                 </div>
             </div>
 
+            <!-- Teachers Management Section -->
+            <div id="teachers-section" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <div>
+                        <h1>Teachers Management</h1>
+                        <p>Manage all teacher records</p>
+                    </div>
+                    <button class="btn-primary" onclick="openAddTeacherModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>Add Teacher</span>
+                    </button>
+                </div>
+
+                <div class="glass-card">
+                    <div class="table-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="teacher-search" placeholder="Search teachers...">
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Teacher ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Subject</th>
+                                    <th>Phone</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="teachers-table-body">
+                                <!-- Teachers will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
             <!-- Analytics Section -->
             <div id="analytics-section" class="content-section" style="display: none;">
                 <div class="section-header">
@@ -524,7 +565,7 @@
                     </div>
                 </div>
             </div>
-</main>
+        </main>
     </div>
 
     <!-- Add/Edit Student Modal -->
@@ -611,6 +652,50 @@
         </div>
     </div>
 
+    <!-- Teacher Modal -->
+    <div id="teacher-modal" class="modal">
+        <div class="modal-content glass-card">
+            <div class="modal-header">
+                <h2 id="teacher-modal-title">Add Teacher</h2>
+                <button class="modal-close" onclick="closeTeacherModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="teacher-form">
+                <div class="form-group">
+                    <label for="teacher-id-input">Teacher ID</label>
+                    <input type="text" id="teacher-id-input" required placeholder="e.g. T001">
+                </div>
+                <div class="form-group">
+                    <label for="teacher-name-input">Full Name</label>
+                    <input type="text" id="teacher-name-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="teacher-email-input">Email</label>
+                    <input type="email" id="teacher-email-input" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="teacher-subject-input">Subject</label>
+                        <input type="text" id="teacher-subject-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="teacher-phone-input">Phone</label>
+                        <input type="tel" id="teacher-phone-input">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="teacher-qualification-input">Qualification</label>
+                    <input type="text" id="teacher-qualification-input">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" onclick="closeTeacherModal()">Cancel</button>
+                    <button type="submit" class="btn-primary">Save Teacher</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast" class="toast">
         <i class="fas fa-check-circle"></i>
@@ -639,7 +724,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            
+
             <div class="profile-modal-body">
                 <div class="profile-avatar-section">
                     <div class="profile-avatar-large" id="profile-avatar-modal">
@@ -648,7 +733,8 @@
                     <label for="profile-upload" class="btn-secondary btn-sm" style="margin-top: 1rem; cursor: pointer;">
                         <i class="fas fa-camera"></i> Change Picture
                     </label>
-                    <input type="file" id="profile-upload" accept="image/*" style="display: none;" onchange="handleProfilePictureSelect(event)">
+                    <input type="file" id="profile-upload" accept="image/*" style="display: none;"
+                        onchange="handleProfilePictureSelect(event)">
                 </div>
 
                 <div class="profile-details-form">
@@ -657,12 +743,12 @@
                             <label>Username</label>
                             <div class="input-display" id="profile-username"></div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" id="profile-email" disabled required>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Role</label>
                             <div class="input-display" id="profile-role"></div>
@@ -674,7 +760,8 @@
                         </div>
 
                         <div class="modal-actions">
-                            <button type="button" class="btn-secondary" id="edit-profile-btn" onclick="toggleEditMode()">
+                            <button type="button" class="btn-secondary" id="edit-profile-btn"
+                                onclick="toggleEditMode()">
                                 <i class="fas fa-edit"></i> Edit Profile
                             </button>
                             <div id="profile-actions" style="display: none; gap: 1rem;">

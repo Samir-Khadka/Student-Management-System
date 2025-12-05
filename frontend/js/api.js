@@ -138,6 +138,26 @@ async function predictStudentPerformance(studentId) {
 }
 
 // ===============================================
+// Teachers API
+// ===============================================
+
+async function getAllTeachers() {
+    return await apiRequest(API_CONFIG.ENDPOINTS.TEACHERS, 'GET');
+}
+
+async function createTeacher(teacherData) {
+    return await apiRequest(API_CONFIG.ENDPOINTS.TEACHERS, 'POST', teacherData);
+}
+
+async function updateTeacher(teacherId, teacherData) {
+    return await apiRequest(API_CONFIG.ENDPOINTS.TEACHER_BY_ID(teacherId), 'PUT', teacherData);
+}
+
+async function deleteTeacher(teacherId) {
+    return await apiRequest(API_CONFIG.ENDPOINTS.TEACHER_BY_ID(teacherId), 'DELETE');
+}
+
+// ===============================================
 // Student Profile API (for logged-in students)
 // ===============================================
 

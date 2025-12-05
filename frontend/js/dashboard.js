@@ -177,6 +177,11 @@ function loadSectionData(sectionId) {
         case 'student-dashboard':
             loadStudentDashboard();
             break;
+        case 'teachers-section':
+            if (user.role === 'admin') {
+                loadAdminTeachers();
+            }
+            break;
     }
 }
 

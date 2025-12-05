@@ -333,3 +333,167 @@ async function loadAnalytics() {
         showToast('Failed to load analytics', 'error');
     }
 }
+
+// ===============================================
+// Teachers Management
+// ===============================================
+
+let allTeachers = [];
+let editingTeacherId = null;
+
+// Load admin teachers table
+async function loadAdminTeachers() {
+    try {
+        const data = await getAllTeachers();
+        allTeachers = data.teachers || [];
+        renderTeachersTable(allTeachers);
+
+        // Initialize search
+        const searchInput = document.getElementById('teacher-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', debounce(() => {
+                const term = searchInput.value.toLowerCase();
+                const filtered = allTeachers.filter(t =>
+                    t.name.toLowerCase().includes(term) ||
+                    t.teacher_id.toLowerCase().includes(term) ||
+                    t.subject.toLowerCase().includes(term)
+                );
+                renderTeachersTable(filtered);
+            }, APP_SETTINGS.DEBOUNCE_DELAY));
+        }
+
+    } catch (error) {
+        console.error('Error loading teachers:', error);
+        showToast('Failed to load teachers', 'error');
+    }
+}
+
+// Render teachers table
+function renderTeachersTable(teachers) {
+    const tbody = document.getElementById('teachers-table-body');
+    if (!tbody) return;
+
+    if (teachers.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                    No teachers found
+                </td>
+            </tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = teachers.map(teacher => `
+        <tr>
+            <td>${teacher.teacher_id}</td>
+            <td>${teacher.name}</td>
+            <td>${teacher.email}</td>
+            <td>${teacher.subject}</td>
+            <td>${teacher.phone || '-'}</td>
+            <td>
+                <div class="action-buttons">
+                    <button onclick="editTeacher('${teacher.teacher_id}')" title="Edit">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="danger" onclick="confirmDeleteTeacher('${teacher.teacher_id}')" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+// Open add teacher modal
+function openAddTeacherModal() {
+    editingTeacherId = null;
+    document.getElementById('teacher-modal-title').textContent = 'Add Teacher';
+    clearForm('teacher-form');
+    document.getElementById('teacher-modal').classList.add('active');
+}
+
+// Close teacher modal
+function closeTeacherModal() {
+    document.getElementById('teacher-modal').classList.remove('active');
+    document.getElementById('teacher-id-input').disabled = false;
+    clearForm('teacher-form');
+    editingTeacherId = null;
+}
+
+// Edit teacher
+async function editTeacher(teacherId) {
+    const teacher = allTeachers.find(t => t.teacher_id === teacherId);
+    if (!teacher) return;
+
+    editingTeacherId = teacherId;
+    document.getElementById('teacher-modal-title').textContent = 'Edit Teacher';
+
+    document.getElementById('teacher-id-input').value = teacher.teacher_id;
+    document.getElementById('teacher-id-input').disabled = true;
+    document.getElementById('teacher-name-input').value = teacher.name;
+    document.getElementById('teacher-email-input').value = teacher.email;
+    document.getElementById('teacher-subject-input').value = teacher.subject;
+    document.getElementById('teacher-phone-input').value = teacher.phone || '';
+    document.getElementById('teacher-qualification-input').value = teacher.qualification || '';
+
+    document.getElementById('teacher-modal').classList.add('active');
+}
+
+// Initialize teacher form
+function initTeacherForm() {
+    const form = document.getElementById('teacher-form');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const teacherData = {
+            teacher_id: document.getElementById('teacher-id-input').value.trim(),
+            name: document.getElementById('teacher-name-input').value.trim(),
+            email: document.getElementById('teacher-email-input').value.trim(),
+            subject: document.getElementById('teacher-subject-input').value.trim(),
+            phone: document.getElementById('teacher-phone-input').value.trim(),
+            qualification: document.getElementById('teacher-qualification-input').value.trim()
+        };
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        setLoading(submitBtn, true);
+
+        try {
+            if (editingTeacherId) {
+                await updateTeacher(editingTeacherId, teacherData);
+                showToast('Teacher updated successfully');
+            } else {
+                await createTeacher(teacherData);
+                showToast('Teacher added successfully');
+            }
+
+            closeTeacherModal();
+            loadAdminTeachers();
+
+        } catch (error) {
+            showToast(error.message || 'Failed to save teacher', 'error');
+        } finally {
+            setLoading(submitBtn, false);
+        }
+    });
+}
+
+// Confirm delete teacher
+function confirmDeleteTeacher(teacherId) {
+    if (confirm('Are you sure you want to delete this teacher? This will also delete their user account.')) {
+        deleteTeacherById(teacherId);
+    }
+}
+
+// Delete teacher
+async function deleteTeacherById(teacherId) {
+    try {
+        await deleteTeacher(teacherId);
+        showToast('Teacher deleted successfully');
+        loadAdminTeachers();
+    } catch (error) {
+        showToast(error.message || 'Failed to delete teacher', 'error');
+    }
+}

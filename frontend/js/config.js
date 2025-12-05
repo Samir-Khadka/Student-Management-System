@@ -16,6 +16,10 @@ const API_CONFIG = {
         STUDENT_BY_ID: (id) => `/students/${id}`,
         STUDENT_PREDICT: (id) => `/students/predict/${id}`,
 
+        // Teacher endpoints
+        TEACHERS: '/teachers/',
+        TEACHER_BY_ID: (id) => `/teachers/${id}`,
+
         // Student profile endpoints
         STUDENT_PROFILE: '/student/profile',
         STUDENT_PREDICTION: '/student/profile/prediction',
@@ -43,6 +47,7 @@ const MENU_ITEMS = {
     admin: [
         { id: 'admin-dashboard', icon: 'fa-dashboard', label: 'Dashboard' },
         { id: 'students-section', icon: 'fa-user-graduate', label: 'Students' },
+        { id: 'teachers-section', icon: 'fa-chalkboard-teacher', label: 'Teachers' },
         { id: 'analytics-section', icon: 'fa-chart-line', label: 'Analytics' }
     ],
     teacher: [

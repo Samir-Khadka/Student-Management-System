@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initialize student form (for admin)
     initStudentForm();
+    initTeacherForm();
 
     // Close modal when clicking outside
     const modal = document.getElementById('student-modal');

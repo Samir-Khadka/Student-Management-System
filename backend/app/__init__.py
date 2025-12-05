@@ -153,11 +153,13 @@ def register_blueprints(app: Flask) -> None:
     from app.routes.auth import auth_bp
     from app.routes.analytics import analytics_bp
     from app.routes.student_profile import student_profile_bp
+    from app.routes.teachers import teachers_bp
     
     app.register_blueprint(students_bp, url_prefix='/api/students')
     app.register_blueprint(auth_bp, url_prefix='/api/auth')
     app.register_blueprint(analytics_bp, url_prefix='/api/analytics')
     app.register_blueprint(student_profile_bp, url_prefix='/api/student')
+    app.register_blueprint(teachers_bp, url_prefix='/api/teachers')
     
     app.logger.info("Blueprints registered successfully")
 
