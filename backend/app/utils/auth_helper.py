@@ -88,8 +88,10 @@ def validate_user_data(data, is_update=False):
     if 'role' in data and data['role'] not in ['student', 'teacher', 'admin']:
         return None, "Invalid role. Must be: student, teacher, or admin"
     
-    if 'email' in data and '@' not in data['email']:
-        return None, "Invalid email format"
+    if 'email' in data:
+        if '@' not in data['email']:
+            return None, "Invalid email format"
+        data['email'] = data['email'].lower()
     
     if 'password' in data and len(data['password']) < 6:
         return None, "Password must be at least 6 characters"

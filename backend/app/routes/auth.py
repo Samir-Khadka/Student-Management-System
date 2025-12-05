@@ -7,7 +7,8 @@ from flask_jwt_extended import (
     jwt_required,
     get_jwt_identity,
     create_access_token,
-    create_refresh_token
+    create_refresh_token,
+    get_jwt
 )
 from app import mongo
 from app.utils.auth_helper import (
@@ -562,4 +563,111 @@ def upload_picture():
             'message': 'Profile picture uploaded successfully',
             'profile_picture': relative_path
         }), 200
+
+
+@auth_bp.route('/forgot-password', methods=['POST'])
+@handle_exceptions
+def forgot_password():
+    """
+    Initiate password reset.
+    ---
+    tags:
+      - Authentication
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          required:
+            - email
+          properties:
+            email:
+              type: string
+    responses:
+      200:
+        description: Reset token generated
+      404:
+        description: Email not found
+    """
+    data = request.get_json()
+    
+    if not data or 'email' not in data:
+        return jsonify({'error': 'Email is required'}), 400
+        
+    user = mongo.db.users.find_one({'email': data['email']})
+    
+    if not user:
+        return jsonify({'error': 'Email not found'}), 404
+        
+    # Generate reset token (valid for 15 minutes)
+    from datetime import timedelta
+    reset_token = create_access_token(
+        identity=str(user['_id']),
+        expires_delta=timedelta(minutes=15),
+        additional_claims={'type': 'reset'}
+    )
+    
+    # In a real app, send this via email. Here we return it.
+    return jsonify({
+        'message': 'Password reset initiated',
+        'reset_token': reset_token,
+        'instruction': 'Use this token to reset your password'
+    }), 200
+
+
+@auth_bp.route('/reset-password', methods=['POST'])
+@jwt_required()
+@handle_exceptions
+def reset_password():
+    """
+    Reset password using token.
+    ---
+    tags:
+      - Authentication
+    security:
+      - Bearer: []
+    parameters:
+      - in: body
+        name: body
+        required: true
+        schema:
+          type: object
+          required:
+            - new_password
+          properties:
+            new_password:
+              type: string
+    responses:
+      200:
+        description: Password reset successful
+      400:
+        description: Invalid password
+    """
+    claims = get_jwt()
+    if claims.get('type') != 'reset':
+        return jsonify({'error': 'Invalid token type'}), 400
+        
+    data = request.get_json()
+    if not data or 'new_password' not in data:
+        return jsonify({'error': 'New password is required'}), 400
+        
+    if len(data['new_password']) < 6:
+        return jsonify({'error': 'Password must be at least 6 characters'}), 400
+        
+    user_id = get_jwt_identity()
+    hashed_pwd = hash_password(data['new_password'])
+    
+    from bson.objectid import ObjectId
+    mongo.db.users.update_one(
+        {'_id': ObjectId(user_id)},
+        {
+            '$set': {
+                'password': hashed_pwd,
+                'updated_at': datetime.utcnow()
+            }
+        }
+    )
+    
+    return jsonify({'message': 'Password reset successful. Please login.'}), 200
 

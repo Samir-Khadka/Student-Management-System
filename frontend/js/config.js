@@ -10,6 +10,8 @@ const API_CONFIG = {
         CHANGE_PASSWORD: '/auth/change-password',
         PROFILE_UPDATE: '/auth/profile',
         UPLOAD_PICTURE: '/auth/upload-picture',
+        FORGOT_PASSWORD: '/auth/forgot-password',
+        RESET_PASSWORD: '/auth/reset-password',
 
         // Student endpoints
         STUDENTS: '/students/',

@@ -153,6 +153,10 @@ function renderStudentsTable() {
 
 // Initialize student filters
 function initializeStudentFilters() {
+    // Only initialize if user is admin
+    const user = getCurrentUserData();
+    if (!user || user.role !== 'admin') return;
+
     const searchInput = document.getElementById('student-search');
     const genderFilter = document.getElementById('gender-filter');
     const supportFilter = document.getElementById('support-filter');
@@ -162,11 +166,10 @@ function initializeStudentFilters() {
         filterStudents();
     }, APP_SETTINGS.DEBOUNCE_DELAY);
 
-    searchInput.addEventListener('input', debouncedSearch);
-
-    // Filters
-    genderFilter.addEventListener('change', filterStudents);
-    supportFilter.addEventListener('change', filterStudents);
+    // Use oninput/onchange to avoid duplicate listeners from other scripts
+    searchInput.oninput = debouncedSearch;
+    genderFilter.onchange = filterStudents;
+    supportFilter.onchange = filterStudents;
 }
 
 // Filter students
@@ -360,7 +363,7 @@ async function loadAdminTeachers() {
         // Initialize search
         const searchInput = document.getElementById('teacher-search');
         if (searchInput) {
-            searchInput.addEventListener('input', debounce(() => {
+            searchInput.oninput = debounce(() => {
                 const term = searchInput.value.toLowerCase();
                 const filtered = allTeachers.filter(t =>
                     t.name.toLowerCase().includes(term) ||
@@ -368,7 +371,7 @@ async function loadAdminTeachers() {
                     t.subject.toLowerCase().includes(term)
                 );
                 renderTeachersTable(filtered);
-            }, APP_SETTINGS.DEBOUNCE_DELAY));
+            }, APP_SETTINGS.DEBOUNCE_DELAY);
         }
 
     } catch (error) {

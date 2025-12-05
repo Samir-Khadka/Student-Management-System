@@ -137,6 +137,29 @@ async function predictStudentPerformance(studentId) {
     return await apiRequest(API_CONFIG.ENDPOINTS.STUDENT_PREDICT(studentId), 'GET');
 }
 
+async function requestPasswordReset(email) {
+    return await apiRequest(API_CONFIG.ENDPOINTS.FORGOT_PASSWORD, 'POST', { email });
+}
+
+async function resetPassword(token, newPassword) {
+    const response = await fetch(API_CONFIG.BASE_URL + API_CONFIG.ENDPOINTS.RESET_PASSWORD, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ new_password: newPassword })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message || data.error || 'Request failed');
+    }
+
+    return data;
+}
+
 // ===============================================
 // Teachers API
 // ===============================================

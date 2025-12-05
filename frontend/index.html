@@ -130,7 +130,7 @@
                     </button>
 
                     <div class="auth-footer">
-                        <a href="#" class="text-link">Forgot password?</a>
+                        <a href="#" class="text-link" onclick="openForgotPasswordModal()">Forgot password?</a>
                         <p style="margin-top: 1rem; color: var(--text-secondary);">
                             Don't have an account? <a href="#" class="text-link"
                                 onclick="switchAuthTab('register')">Sign up</a>
@@ -715,6 +715,46 @@
     <script src="js/profile.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/app.js"></script>
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="modal">
+        <div class="modal-content glass-card" style="max-width: 400px;">
+            <div class="modal-header">
+                <h2>Reset Password</h2>
+                <button class="modal-close" onclick="closeForgotPasswordModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Step 1: Request Token -->
+            <form id="forgot-password-step1">
+                <p style="margin-bottom: 1.5rem; color: var(--text-secondary);">
+                    Enter your email address to receive a password reset token.
+                </p>
+                <div class="form-group">
+                    <label for="forgot-email">Email Address</label>
+                    <input type="email" id="forgot-email" required>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Get Reset Token</button>
+            </form>
+
+            <!-- Step 2: Reset Password -->
+            <form id="forgot-password-step2" style="display: none;">
+                <div class="alert alert-info" style="margin-bottom: 1rem; font-size: 0.9rem;">
+                    Token generated! Check console or copy from below.
+                </div>
+                <div class="form-group">
+                    <label for="reset-token">Reset Token</label>
+                    <textarea id="reset-token" rows="3" required placeholder="Paste token here"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="new-password">New Password</label>
+                    <input type="password" id="new-password" required minlength="6">
+                </div>
+                <button type="submit" class="btn-primary btn-block">Reset Password</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Teacher Grade Modal -->
     <div id="teacher-grade-modal" class="modal">
         <div class="modal-content glass-card" style="max-width: 400px;">

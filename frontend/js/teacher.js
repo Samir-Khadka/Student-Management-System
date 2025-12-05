@@ -60,13 +60,17 @@ async function loadTeacherAtRiskStudents() {
     }
 }
 
+let allTeacherStudents = [];
+let filteredTeacherStudents = [];
+
 // Load teacher students view (read-only)
 async function loadTeacherStudents() {
     try {
         const data = await getAllStudents();
-        const students = data.students || [];
+        allTeacherStudents = data.students || [];
+        filteredTeacherStudents = [...allTeacherStudents];
 
-        renderTeacherStudentsTable(students);
+        renderTeacherStudentsTable(filteredTeacherStudents);
         initializeTeacherFilters();
 
     } catch (error) {
@@ -115,20 +119,47 @@ function renderTeacherStudentsTable(students) {
 
 // Initialize teacher filters
 function initializeTeacherFilters() {
+    // Only initialize if user is teacher
+    const user = getCurrentUserData();
+    if (!user || user.role !== 'teacher') return;
+
     const searchInput = document.getElementById('student-search');
     const genderFilter = document.getElementById('gender-filter');
     const supportFilter = document.getElementById('support-filter');
 
     if (!searchInput) return;
 
-    const debouncedSearch = debounce(async () => {
-        await loadTeacherStudents();
+    // Remove existing listeners to prevent duplicates (not easily possible with addEventListener)
+    // So we use a flag or just assume this is called once per session load?
+    // Better: Assign to oninput to overwrite previous handlers
+
+    const debouncedSearch = debounce(() => {
+        filterTeacherStudents();
     }, APP_SETTINGS.DEBOUNCE_DELAY);
 
-    searchInput.addEventListener('input', debouncedSearch);
+    searchInput.oninput = debouncedSearch;
+    if (genderFilter) genderFilter.onchange = filterTeacherStudents;
+    if (supportFilter) supportFilter.onchange = filterTeacherStudents;
+}
 
-    if (genderFilter) genderFilter.addEventListener('change', loadTeacherStudents);
-    if (supportFilter) supportFilter.addEventListener('change', loadTeacherStudents);
+// Filter teacher students
+function filterTeacherStudents() {
+    const searchTerm = document.getElementById('student-search').value.toLowerCase();
+    const genderFilter = document.getElementById('gender-filter').value;
+    const supportFilter = document.getElementById('support-filter').value;
+
+    filteredTeacherStudents = allTeacherStudents.filter(student => {
+        const matchesSearch = !searchTerm ||
+            student.name.toLowerCase().includes(searchTerm) ||
+            student.student_id.toLowerCase().includes(searchTerm);
+
+        const matchesGender = !genderFilter || student.gender === genderFilter;
+        const matchesSupport = !supportFilter || student.parental_support === supportFilter;
+
+        return matchesSearch && matchesGender && matchesSupport;
+    });
+
+    renderTeacherStudentsTable(filteredTeacherStudents);
 }
 
 // View student details (read-only modal)
