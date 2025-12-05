@@ -251,7 +251,8 @@ def login():
             'email': user['email'],
             'role': user['role'],
             'full_name': user.get('full_name', ''),
-            'student_id': user.get('student_id', None)
+            'student_id': user.get('student_id', None),
+            'profile_picture': user.get('profile_picture', None)
         }
     }), 200
 
@@ -384,6 +385,7 @@ def get_current_user():
             'role': user['role'],
             'full_name': user.get('full_name', ''),
             'student_id': user.get('student_id', None),
+            'profile_picture': user.get('profile_picture', None),
             'created_at': user.get('created_at', None),
             'is_active': user.get('is_active', True),
             'last_logout': user.get('last_logout', None)
