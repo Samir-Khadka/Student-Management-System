@@ -48,7 +48,16 @@ async function loadAdminDashboard() {
         // Update stats
         console.log('Updating dashboard stats...');
         document.getElementById('total-students').textContent = total;
-        document.getElementById('total-teachers').textContent = '0'; // Would need users endpoint
+
+        try {
+            const teachersData = await getAllTeachers();
+            const teacherCount = teachersData.count || (teachersData.teachers ? teachersData.teachers.length : 0);
+            document.getElementById('total-teachers').textContent = teacherCount;
+        } catch (error) {
+            console.error('Error fetching teachers count:', error);
+            document.getElementById('total-teachers').textContent = '0';
+        }
+
         document.getElementById('at-risk-students').textContent = atRiskStudents.length;
         document.getElementById('average-grade').textContent = avgGrade.toFixed(1);
 

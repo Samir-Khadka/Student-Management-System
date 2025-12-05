@@ -141,6 +141,22 @@ def register():
             'updated_at': datetime.utcnow()
         }
         mongo.db.students.insert_one(student_doc)
+
+    # If role is teacher, create entry in teachers collection
+    elif validated_data['role'] == 'teacher':
+        # Use username as teacher_id if not provided (though registration form usually doesn't ask for teacher_id)
+        # For consistency, we'll use the username as teacher_id
+        teacher_doc = {
+            'teacher_id': validated_data['username'],
+            'name': data.get('full_name', validated_data['username']),
+            'email': validated_data['email'],
+            'subject': 'General',  # Default
+            'phone': '',
+            'qualification': '',
+            'created_at': datetime.utcnow(),
+            'updated_at': datetime.utcnow()
+        }
+        mongo.db.teachers.insert_one(teacher_doc)
     
     return jsonify({
         'message': 'User registered successfully',
