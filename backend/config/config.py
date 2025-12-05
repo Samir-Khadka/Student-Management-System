@@ -42,7 +42,6 @@ class DevelopmentConfig(Config):
     """Development configuration."""
     DEBUG = True
     TESTING = False
-    MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/student_management_dev')
 
 
 class ProductionConfig(Config):

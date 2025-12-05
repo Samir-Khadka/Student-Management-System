@@ -21,4 +21,5 @@ if __name__ == '__main__':
     debug = app.config['DEBUG']
     
     # Run the app
+    print(f"Server running on http://{host}:{port}")
     app.run(host=host, port=port, debug=debug)
