@@ -100,9 +100,14 @@ function renderTeacherStudentsTable(students) {
             <td><strong>${student.final_grade}</strong></td>
             <td>${getStatusBadge(student.final_grade)}</td>
             <td>
-                <button onclick="viewStudentDetails('${student.student_id}')" style="background: var(--primary); color: white; border: none; padding: 0.5rem 1rem; border-radius: var(--radius-sm); cursor: pointer;">
-                    <i class="fas fa-eye"></i> View
-                </button>
+                <div class="action-buttons">
+                    <button onclick="viewStudentDetails('${student.student_id}')" title="View Details">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                    <button onclick="openGradeModal('${student.student_id}', ${student.final_grade}, '${student.name}')" title="Edit Grade" style="background: var(--warning);">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
             </td>
         </tr>
     `).join('');
@@ -151,4 +156,61 @@ Final Grade: ${student.final_grade}
     } catch (error) {
         showToast('Failed to load student details', 'error');
     }
+}
+
+// ===============================================
+// Grade Management
+// ===============================================
+
+let editingGradeStudentId = null;
+
+// Open grade modal
+function openGradeModal(studentId, currentGrade, studentName) {
+    editingGradeStudentId = studentId;
+    document.getElementById('grade-student-name').value = studentName;
+    document.getElementById('grade-input').value = currentGrade;
+    document.getElementById('teacher-grade-modal').classList.add('active');
+}
+
+// Close grade modal
+function closeGradeModal() {
+    document.getElementById('teacher-grade-modal').classList.remove('active');
+    editingGradeStudentId = null;
+    document.getElementById('teacher-grade-form').reset();
+}
+
+// Initialize teacher grade form
+function initTeacherGradeForm() {
+    const form = document.getElementById('teacher-grade-form');
+    if (!form) return;
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (!editingGradeStudentId) return;
+
+        const newGrade = parseInt(document.getElementById('grade-input').value);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        setLoading(submitBtn, true);
+
+        try {
+            // We only update the grade, keeping other fields as is
+            // Since the update endpoint requires a full object or partial, 
+            // we'll send just the final_grade. The backend supports partial updates.
+            await updateStudent(editingGradeStudentId, { final_grade: newGrade });
+
+            showToast('Grade updated successfully');
+            closeGradeModal();
+            loadTeacherStudents(); // Refresh table
+
+            // Also refresh stats if needed
+            loadTeacherDashboard();
+
+        } catch (error) {
+            console.error('Error updating grade:', error);
+            showToast(error.message || 'Failed to update grade', 'error');
+        } finally {
+            setLoading(submitBtn, false);
+        }
+    });
 }

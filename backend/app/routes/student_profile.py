@@ -8,6 +8,8 @@ from app import mongo
 from app.utils.decorators import handle_exceptions
 from app.models.student_model import validate_student_data, serialize_student
 
+from bson.objectid import ObjectId
+
 student_profile_bp = Blueprint('student_profile', __name__)
 
 
@@ -40,7 +42,7 @@ def get_my_profile():
             'message': 'Only students can access this endpoint'
         }), 403
     
-    user = mongo.db.users.find_one({'_id': user_id})
+    user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
     if not user or 'student_id' not in user:
         return jsonify({
             'error': 'Not Found',
@@ -101,7 +103,7 @@ def update_my_profile():
             'message': 'Only students can access this endpoint'
         }), 403
     
-    user = mongo.db.users.find_one({'_id': user_id})
+    user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
     if not user or 'student_id' not in user:
         return jsonify({
             'error': 'Not Found',
@@ -175,7 +177,7 @@ def get_my_prediction():
             'message': 'Only students can access this endpoint'
         }), 403
     
-    user = mongo.db.users.find_one({'_id': user_id})
+    user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
     if not user or 'student_id' not in user:
         return jsonify({
             'error': 'Not Found',

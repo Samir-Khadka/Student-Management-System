@@ -4,8 +4,8 @@
 async function loadStudentDashboard() {
     try {
         // Get student profile data
-        const profileData = await getStudentProfile();
-        const profile = profileData.student_profile || {};
+        // Get student profile data
+        const profile = await getStudentProfile();
 
         // Update profile header
         const nameEl = document.getElementById('student-name');
