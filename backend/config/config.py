@@ -33,6 +33,9 @@ class Config:
     
     LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
     LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    
+    UPLOAD_FOLDER = os.path.join(os.getcwd(), 'app', 'static', 'uploads')
+    MAX_CONTENT_LENGTH = 5 * 1024 * 1024  # 5MB max upload size
 
 
 class DevelopmentConfig(Config):

@@ -66,8 +66,34 @@ async function getCurrentUser() {
 async function changePassword(currentPassword, newPassword) {
     return await apiRequest(API_CONFIG.ENDPOINTS.CHANGE_PASSWORD, 'POST', {
         current_password: currentPassword,
-        new_password: newPassword
     });
+}
+
+async function updateUserProfile(profileData) {
+    return await apiRequest(API_CONFIG.ENDPOINTS.PROFILE_UPDATE, 'PUT', profileData);
+}
+
+async function uploadProfilePicture(file) {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const token = localStorage.getItem(APP_SETTINGS.TOKEN_KEY);
+
+    const response = await fetch(`${API_CONFIG.BASE_URL}${API_CONFIG.ENDPOINTS.UPLOAD_PICTURE}`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: formData
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+        throw new Error(responseData.message || responseData.error || 'Upload failed');
+    }
+
+    return responseData;
 }
 
 // ===============================================

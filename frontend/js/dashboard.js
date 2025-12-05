@@ -49,13 +49,51 @@ async function initDashboard() {
 
 // Update user info in navigation
 function updateUserInfo(user) {
+    // Navbar elements
     const userNameEl = document.getElementById('user-name');
     const userRoleEl = document.getElementById('user-role');
+    const userAvatarEl = document.getElementById('user-avatar');
     const userInitialsEl = document.getElementById('user-initials');
 
-    if (userNameEl) userNameEl.textContent = user.full_name || user.username || 'User';
-    if (userRoleEl) userRoleEl.textContent = capitalize(user.role || 'guest');
-    if (userInitialsEl) userInitialsEl.textContent = getInitials(user.full_name || user.username || 'U');
+    // Dropdown elements
+    const dropdownNameEl = document.getElementById('dropdown-name');
+    const dropdownEmailEl = document.getElementById('dropdown-email');
+    const dropdownAvatarEl = document.getElementById('dropdown-avatar-menu');
+    const dropdownInitialsEl = document.getElementById('dropdown-initials');
+
+    // Update text content
+    const fullName = user.full_name || user.username || 'User';
+    const role = capitalize(user.role || 'guest');
+    const initials = getInitials(fullName);
+
+    if (userNameEl) userNameEl.textContent = fullName;
+    if (userRoleEl) userRoleEl.textContent = role;
+    if (userInitialsEl) userInitialsEl.textContent = initials;
+
+    if (dropdownNameEl) dropdownNameEl.textContent = fullName;
+    if (dropdownEmailEl) dropdownEmailEl.textContent = user.email || '';
+    if (dropdownInitialsEl) dropdownInitialsEl.textContent = initials;
+
+    // Helper to update avatar container
+    const updateAvatarContainer = (container, initialsSpanId) => {
+        if (!container) return;
+
+        if (user.profile_picture) {
+            const apiUrl = API_CONFIG.BASE_URL.replace('/api', '');
+            const profilePictureUrl = `${apiUrl}${user.profile_picture}?t=${new Date().getTime()}`;
+
+            container.innerHTML = `<img src="${profilePictureUrl}" alt="${fullName}" 
+                style="width: 100%; height: 100%; object-fit: cover;"
+                onerror="this.style.display='none'; document.getElementById('${initialsSpanId}').style.display='block';">
+                <span id="${initialsSpanId}" style="display:none">${initials}</span>`;
+        } else {
+            container.innerHTML = `<span id="${initialsSpanId}">${initials}</span>`;
+        }
+    };
+
+    // Update avatars
+    updateAvatarContainer(userAvatarEl, 'user-initials');
+    updateAvatarContainer(dropdownAvatarEl, 'dropdown-initials');
 }
 
 // Build sidebar menu
@@ -154,3 +192,45 @@ document.addEventListener('click', (e) => {
         sidebar.classList.remove('open');
     }
 });
+
+// Dropdown Management
+function toggleUserDropdown(event) {
+    event.stopPropagation();
+    const dropdown = document.getElementById('user-dropdown');
+    dropdown.classList.toggle('active');
+}
+
+// Close dropdown when clicking outside
+document.addEventListener('click', (event) => {
+    const dropdown = document.getElementById('user-dropdown');
+    const userInfo = document.querySelector('.user-info');
+
+    if (dropdown && dropdown.classList.contains('active')) {
+        if (!userInfo.contains(event.target)) {
+            dropdown.classList.remove('active');
+        }
+    }
+});
+
+// Profile Modal Management
+function openProfileModal() {
+    const modal = document.getElementById('profile-modal');
+    if (modal) {
+        modal.classList.add('active');
+        loadProfileSection(); // Load data when opening
+    }
+    // Close dropdown
+    const dropdown = document.getElementById('user-dropdown');
+    if (dropdown) dropdown.classList.remove('active');
+}
+
+function closeProfileModal() {
+    const modal = document.getElementById('profile-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        // Reset edit mode if active
+        if (typeof isEditMode !== 'undefined' && isEditMode) {
+            toggleEditMode();
+        }
+    }
+}

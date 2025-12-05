@@ -8,6 +8,8 @@ const API_CONFIG = {
         LOGOUT: '/auth/logout',
         ME: '/auth/me',
         CHANGE_PASSWORD: '/auth/change-password',
+        PROFILE_UPDATE: '/auth/profile',
+        UPLOAD_PICTURE: '/auth/upload-picture',
 
         // Student endpoints
         STUDENTS: '/students/',

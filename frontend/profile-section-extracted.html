@@ -1,0 +1,54 @@
+﻿<!-- Profile Section (Universal for all users) -->
+            <div id="profile-section" class="content-section" style="display: none;">
+                <div class="section-header">
+                    <h1>My Profile</h1>
+                    <p>Manage your account settings</p>
+                </div>
+
+                <div class="content-grid">
+                    <div class="glass-card">
+                        <h3>Profile Picture</h3>
+                        <div class="profile-picture-section">
+                            <div class="current-profile-picture">
+                                <div class="user-avatar large" id="profile-avatar" style="width: 150px; height: 150px; font-size: 3rem;">
+                                    <span id="profile-initials">U</span>
+                                </div>
+                            </div>
+                            <div class="profile-picture-actions">
+                                <label for="profile-picture-input" class="btn-primary">
+                                    <i class="fas fa-camera"></i>
+                                    <span>Change Picture</span>
+                                </label>
+                                <input type="file" id="profile-picture-input" accept="image/*" style="display: none;" onchange="handleProfilePictureSelect(event)">
+                                <p style="margin-top: var(--spacing-md); color: var(--text-muted); font-size: var(--font-size-sm);">
+                                    JPG, PNG or GIF. Max size 5MB
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card">
+                        <h3>Account Information</h3>
+                        <div class="profile-info-grid">
+                            <div class="info-item">
+                                <label>Username</label>
+                                <p id="profile-username">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Full Name</label>
+                                <p id="profile-fullname">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Email</label>
+                                <p id="profile-email">-</p>
+                            </div>
+                            <div class="info-item">
+                                <label>Role</label>
+                                <p id="profile-role">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </main>
